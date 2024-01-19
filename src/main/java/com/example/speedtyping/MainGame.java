@@ -13,13 +13,12 @@ public class MainGame extends Application {
     public void start(Stage stage) throws IOException {
 
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("hello-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("main-page.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 320, 240);
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();
-            game = fxmlLoader.getController();
-            game.endGame();
+
 
         }catch (Exception e){
             System.out.println(e);

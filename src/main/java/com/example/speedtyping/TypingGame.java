@@ -2,17 +2,22 @@ package com.example.speedtyping;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class TypingGame  {
 
+
+    public Button enter;
     private Keyboard keyboard;
     private Timer timer;
     private HighScore highScore;
@@ -61,9 +68,21 @@ public class TypingGame  {
 
 
 
-    public void checkPlayerRegister()
-    {
-
+    public void checkPlayerRegister() throws IOException {
+        Stage stage = (Stage) enter.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("hello-view.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 500, 500);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        TypingGame game;
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        game = fxmlLoader.getController();
+        game.endGame();
+        stage.show();
     }
 
 
