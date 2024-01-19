@@ -14,7 +14,7 @@ public class MainGame extends Application {
 
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("main-page.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+            Scene scene = new Scene(fxmlLoader.load(), 700, 500);
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();

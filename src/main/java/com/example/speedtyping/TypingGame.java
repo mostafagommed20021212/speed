@@ -73,7 +73,7 @@ public class TypingGame  {
         FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("hello-view.fxml"));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 500, 500);
+            scene = new Scene(fxmlLoader.load(), 1100, 800);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
