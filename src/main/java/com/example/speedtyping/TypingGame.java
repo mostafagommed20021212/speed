@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class TypingGame implements Colorable ,Initializable  {
+public class TypingGame  {
 
     private Keyboard keyboard;
     private Timer timer;
@@ -39,6 +39,12 @@ public class TypingGame implements Colorable ,Initializable  {
     private Text time;
     @FXML
     private Button spaceBtn;
+    @FXML
+    private  Pane pane1;
+    @FXML
+    private  Pane pane2;
+    @FXML
+    private  Pane pane3;
     private Boolean isStart ;
     public void endGame(){
         listWord = new ListWord(board);
@@ -47,6 +53,7 @@ public class TypingGame implements Colorable ,Initializable  {
         pane.getChildren().add(player);
         this.mapListWord = listWord.getMapOfWord();
         isStart = true;
+        keyboard = new Keyboard(pane3,pane1,pane2);
 
 
     }
@@ -64,11 +71,13 @@ public class TypingGame implements Colorable ,Initializable  {
 
 
     public void startGame(KeyEvent e) {
+        pane.requestFocus();
         if(isStart){
             timer = new Timer(15,time);
              thread = new Thread(timer);
             thread.start();
             isStart = false;
+
         }
         if(e.isControlDown() && e.getCode().equals(KeyCode.ENTER)){
             resetAll();
@@ -88,7 +97,9 @@ public class TypingGame implements Colorable ,Initializable  {
                 }
                 counter--;
                 col--;
+
                 return;
+
             }
             while (counter != 0 && !wordDelete.getText().equals(" ")){
                 wordDelete.setFill(Color.rgb(219, 216, 182));
@@ -101,14 +112,18 @@ public class TypingGame implements Colorable ,Initializable  {
                 col--;
 
             }
+
             System.out.println("deleot"+row +" "+ col);
             wordDelete.setFill(Color.rgb(219, 216, 182));
             if(col == -2 && row == 0){
                 wordDelete = mapListWord.get(counter+1);
                 player.moveLeft(wordDelete);
+
             }else {
                 player.moveLeft(wordDelete);
+
             }
+
             return;
 
 
@@ -117,10 +132,14 @@ public class TypingGame implements Colorable ,Initializable  {
         boolean isLetter = Character.isLetter(click.charAt(0)) && click.length() ==1 ;
         boolean isBackSpace = e.getCode().equals(KeyCode.BACK_SPACE);
         if(isLetter || isSpace){
-            if(charClick.getText().equals(click))
+            if(charClick.getText().equals(click)) {
                 charClick.setFill(Color.rgb(63, 62, 63));
-            else
-                charClick.setFill(Color.rgb(202,71,84));
+                keyboard.changeColor(e,true);
+            }
+            else {
+                charClick.setFill(Color.rgb(202, 71, 84));
+                keyboard.changeColor(e,false);
+            }
             player.moveRight(charClick);
             System.out.println("right" + row +" "+ col);
             counter++;
@@ -181,144 +200,8 @@ public class TypingGame implements Colorable ,Initializable  {
     }
 
 
-
-        @FXML
-        public Pane pane3;
-        @FXML
-        private Pane pane1;
-
-        @FXML
-        private Pane pane2;
-        Map<String, String> hm = new HashMap<String, String>();
-        @Override
-        public void initialize(URL url, ResourceBundle resourceBundle) {
-            pane2.setVisible(false);
-            pane1.setVisible(true);
-            pane3.setVisible(false);
-
-
-            hm.put("OPEN_BRACKET", "[");
-            hm.put("CLOSE_BRACKET", "]");
-            hm.put("SEMICOLON", ";");
-            hm.put("QUOTE", "'");
-            hm.put("COMMA",",");
-            hm.put("PERIOD",".");
-            hm.put("SLASH","/");
-            hm.put("DIGIT1","1");
-            hm.put("DIGIT2","2");
-            hm.put("DIGIT3","3");
-            hm.put("DIGIT4","4");
-            hm.put("DIGIT5","5");
-            hm.put("DIGIT6","6");
-            hm.put("DIGIT7","7");
-            hm.put("DIGIT8","8");
-            hm.put("DIGIT9","9");
-            hm.put("DIGIT0","0");
-            hm.put("MINUS","-");
-            hm.put("EQUALS","+");
-            hm.put("BACK_SPACE","BACK");
-
-
-        }
-
-
-
-        public void changeColor(KeyEvent e) {
-            System.out.println(e);
-            Pane pane = (Pane)e.getSource();
-            System.out.println(e.getCode());
-            System.out.println(hm.size());
-            for (Node node:pane.getChildren()) {
-
-                if(node instanceof Button)
-                {
-
-
-
-                    if(((Button)node).getText().equals(e.getCode().toString()))
-                    {
-                        ((Button)node).setStyle("-fx-background-color:" + NEW_COLOR +  "; -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill:  #1D1C1D;");
-                        //-fx-background-color: transparent;  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;
-                        break;
-                    }
-                    else if(hm.containsKey(e.getCode().toString()) && ((Button)node).getText().equals(hm.get(e.getCode().toString())))
-                    {
-
-                        ((Button)node).setStyle("-fx-background-color:" + NEW_COLOR +  "; -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill:  #1D1C1D;");
-                        break;
-                    }
-
-                }
-            }
-
-
-        }
-
-    @Override
-    public void returnColor(KeyEvent actionEvent) {
-
+    public void releaseKey() {
+        System.out.println("i love mostafa");
+        keyboard.returnColor();
     }
-
-    public void changeSpace(String key)
-        {
-            Pane pane ;
-            if(pane1.isVisible())
-            {
-                pane = pane1;
-            } else if (pane2.isVisible()) {
-                pane = pane2;
-            }
-            else {
-                pane = pane3;
-            }
-
-            System.out.println(hm.size());
-            for (Node node:pane.getChildren()) {
-
-                if(node instanceof Button)
-                {
-
-
-
-                    if(((Button)node).getText().equals(key))
-                    {
-                        ((Button)node).setStyle("-fx-background-color:" + NEW_COLOR +  "; -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill:  #1D1C1D;");
-                        //-fx-background-color: transparent;  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;
-                        break;
-                    }
-
-                }
-            }
-        }
-        public void returnColor() {
-
-            Pane pane ;
-            if(pane1.isVisible())
-            {
-                pane = pane1;
-            } else if (pane2.isVisible()) {
-                pane = pane2;
-            }
-            else {
-                pane = pane3;
-            }
-            for (Node node:pane.getChildren()) {
-
-                if(node instanceof Button)
-                {
-
-                    ((Button)node).setStyle("-fx-background-color:" +  ORIGINAL_COLOR + ";  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;");
-
-
-                }
-            }
-
-        }
-
-
-        public void hello(KeyEvent keyEvent) {
-            System.out.println("hello world");
-        }
-
-
 }
