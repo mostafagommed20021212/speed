@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>demo2</artifactId>
+    <artifactId>speedTyping</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>demo2</name>
+    <name>speedTyping</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.demo2/com.example.demo2.HelloApplication</mainClass>
+                            <mainClass>com.example.speedtyping/com.example.speedtyping.HelloApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

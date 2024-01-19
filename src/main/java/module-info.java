@@ -1,8 +1,8 @@
-module com.example.demo2 {
+module com.example.speedtyping {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.example.demo2 to javafx.fxml;
-    exports com.example.demo2;
+    opens com.example.speedtyping to javafx.fxml;
+    exports com.example.speedtyping;
 }
