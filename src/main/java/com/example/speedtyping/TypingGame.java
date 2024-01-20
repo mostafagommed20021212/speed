@@ -68,12 +68,19 @@ public class TypingGame  {
     private Button spaceBtn;
     private Boolean isStart ;
     public static boolean isClose = false;
+    @FXML
+    private  Pane pane1;
+    @FXML
+    private  Pane pane2;
+    @FXML
+    private  Pane pane3;
 
     public TypingGame() {
 
     }
 
     public void endGame(){
+
         listWord = new ListWord(board);
         player = new CursorPlayer();
         pane.getChildren().add(player);
@@ -82,6 +89,7 @@ public class TypingGame  {
         startRun();
         worstChar = new HashMap<>();
         backCorrectWord = new Stack<>();
+        keyboard = new Keyboard(pane3,pane1,pane2);;
 
     }
     private void startRun() {
@@ -125,6 +133,7 @@ public class TypingGame  {
 
 
     public void startGame(KeyEvent e) {
+        pane.requestFocus();
         System.out.println(allWords + " "+correctWords);
         acc.setVisible(true);
         wpm.setVisible(true);
@@ -218,9 +227,11 @@ public class TypingGame  {
             }
             if(charClick.getText().equals(click) || (charClick.getText().equals(" ") && isSpace)){
                 charClick.setFill(Color.rgb(63, 62, 63));
+                keyboard.changeColor(e,true);
             }
             else{
                 charClick.setFill(Color.rgb(202,71,84));
+                keyboard.changeColor(e,false);
                 isCorrect = false;
                 char ch = charClick.getText().charAt(0);
                 if(!worstChar.containsKey(ch)){
@@ -344,8 +355,10 @@ public class TypingGame  {
         }
 
         listWord.addWordsToBoard(mode);
+        keyboard.changeLayout(mode);
         ((Button) mouseEvent.getSource()).setStyle("-fx-background-color:#D5AD17");
         spaceBtn.requestFocus();
+
 
 
     }
@@ -365,6 +378,11 @@ public class TypingGame  {
             System.out.println(e);
         }
 
+    }
+
+    public void releaseKey() {
+        System.out.println("i love mostafa");
+        keyboard.returnColor();
     }
 
 

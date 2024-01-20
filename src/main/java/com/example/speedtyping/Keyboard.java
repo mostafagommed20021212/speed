@@ -79,7 +79,27 @@ public class Keyboard implements Colorable , Initializable {
 
     }
 
-
+    public void changeLayout(int num)
+    {
+        if(num == 1)
+        {
+            pane1.setVisible(false);
+            pane2.setVisible(false);
+            pane3.setVisible(true);
+        }
+        if(num == 2)
+        {
+            pane1.setVisible(false);
+            pane2.setVisible(true);
+            pane3.setVisible(false);
+        }
+        if(num == 3)
+        {
+            pane1.setVisible(false);
+            pane2.setVisible(false);
+            pane3.setVisible(true);
+        }
+    }
 
     public void changeColor(KeyEvent e,boolean isCorrect) {
         System.out.println("hello change color");
