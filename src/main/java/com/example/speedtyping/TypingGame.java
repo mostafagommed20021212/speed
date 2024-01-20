@@ -2,10 +2,14 @@ package com.example.speedtyping;
 
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Light;
 import javafx.scene.input.KeyCode;
@@ -17,11 +21,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class TypingGame  {
+    public Button enter;
     private Thread endTime;
     private boolean isCorrect = true;
     private int allWords , correctWords;
@@ -95,9 +102,22 @@ public class TypingGame  {
 
 
 
-    public void checkPlayerRegister()
+    public void checkPlayerRegister(ActionEvent et) throws IOException
     {
-
+        Stage stage = (Stage) enter.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("hello-view.fxml"));
+        Scene scene ;
+        try {
+            scene = new Scene(fxmlLoader.load(), 1100, 800);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        TypingGame game;
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        game = fxmlLoader.getController();
+        game.endGame();
+        stage.show();
     }
 
 
@@ -289,7 +309,7 @@ public class TypingGame  {
             startGame(keyEvent);
     }
 
-    public void resetTime(MouseEvent mouseEvent) {
+    public void changeTime(MouseEvent mouseEvent) {
         isTakeTime = true;
         whatTime =Integer.parseInt( ((Button) mouseEvent.getSource()).getText());
         HBox btnHbox = (HBox) ((Button) mouseEvent.getSource()).getParent();
