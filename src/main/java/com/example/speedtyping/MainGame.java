@@ -19,7 +19,10 @@ public class MainGame extends Application {
             stage.setScene(scene);
             stage.show();
 
-
+            stage.setOnCloseRequest(e->{
+                TypingGame.isClose = true;
+                Timer.endTheGame = true;
+            });
         }catch (Exception e){
             System.out.println(e);
         }

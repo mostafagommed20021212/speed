@@ -52,7 +52,7 @@ public class Score {
     public String toString(){
         StringBuilder str = new StringBuilder("[ ");
         int n = 5;
-        while(n != 0 && worstCh.peek() != null) {
+        while(!worstCh.isEmpty() && n  != 0 ) {
             str.append(worstCh.peek().getValue()).append(" ");
             n--;
         }
