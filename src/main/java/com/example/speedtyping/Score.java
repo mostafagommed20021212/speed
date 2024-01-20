@@ -4,6 +4,8 @@ package com.example.speedtyping;
 import javafx.util.Pair;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
@@ -12,7 +14,7 @@ public class Score implements Serializable {
     private int max15,max30,max60;
     private int acc15,acc30,acc60;
 
-    PriorityQueue<Pair<Integer,Character>> worstCh;
+    List<Map.Entry<Character, Integer>> sortedList;
 
     public int getAcc15() {
         return acc15;
@@ -39,7 +41,7 @@ public class Score implements Serializable {
     }
 
     public Score() {
-        this.worstCh = new PriorityQueue<>();
+
         this.max15 = 0;
         this.max30 = 0;
         this.max60 = 0;
@@ -70,20 +72,19 @@ public class Score implements Serializable {
     }
 
     public void updateWorstCh(Map<Character,Integer>storage){
-        worstCh.clear();
-        for(Map.Entry<Character, Integer> it : storage.entrySet()) {
-            worstCh.add(new Pair<>(it.getValue(),it.getKey()));
-        }
+        sortedList = new ArrayList<>(storage.entrySet());
+        sortedList.sort(Map.Entry.comparingByValue());
     }
     @Override
     public String toString(){
         StringBuilder str = new StringBuilder("[ ");
         int n = 5;
-        while(!worstCh.isEmpty() && n  != 0 ) {
-            str.append(worstCh.peek().getValue()).append(" ");
-            n--;
+        for (Map.Entry<Character, Integer> entry : sortedList) {
+            str.append(entry.getKey()).append(" ");
+            if(--n == 0)break;
         }
         str.append("]");
+
         return str.toString();
     }
 }

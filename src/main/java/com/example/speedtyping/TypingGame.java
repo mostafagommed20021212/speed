@@ -87,6 +87,7 @@ public class TypingGame  {
 
     }
 
+
     public void endGame(){
 
         loadList();
@@ -402,7 +403,7 @@ public class TypingGame  {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             user = playerList.createPlayer(name);
             user.setScore((int) Math.round(allWords / (whatTime / 60.0)), whatTime, (int) Math.round((correctWords * 1.0) / allWords * 100));
-
+            user.setWorstCharacter(worstChar);
             System.out.println(user.getScore().getAcc15() + "          " + user.getScore().getMax15() + "     " + user.getScore().toString());
 
             oos.writeObject(playerList);
@@ -435,4 +436,7 @@ public class TypingGame  {
     }
 
 
+    public void changeToScore(MouseEvent mouseEvent) {
+
+    }
 }
