@@ -98,9 +98,7 @@ public class Keyboard implements Colorable , Initializable {
     }
 
     public void changeColor(KeyEvent e,boolean isCorrect) {
-        System.out.println("hello change color");
-        System.out.println(e);
-        System.out.println(hm.size());
+
         Pane pane ;
 
          if (pane2.isVisible()) {
@@ -145,7 +143,7 @@ public class Keyboard implements Colorable , Initializable {
 
 
     public void returnColor() {
-        System.out.println("helloSpace");
+
         Pane pane ;
         if (pane2.isVisible()) {
             pane = pane2;
@@ -167,8 +165,5 @@ public class Keyboard implements Colorable , Initializable {
     }
 
 
-    public void hello(KeyEvent keyEvent) {
-        System.out.println("hello world");
-    }
 
 }

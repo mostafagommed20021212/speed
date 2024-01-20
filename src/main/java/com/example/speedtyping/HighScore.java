@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
-public  class  HighScore {
+public  class  HighScore  {
 
     public static String updateHighScore(int second)
     {

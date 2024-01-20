@@ -3,13 +3,40 @@ package com.example.speedtyping;
 
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-public class Score {
+public class Score implements Serializable {
 
     private int max15,max30,max60;
+    private int acc15,acc30,acc60;
+
     PriorityQueue<Pair<Integer,Character>> worstCh;
+
+    public int getAcc15() {
+        return acc15;
+    }
+
+    public void setAcc15(int acc15) {
+        this.acc15 = acc15;
+    }
+
+    public int getAcc30() {
+        return acc30;
+    }
+
+    public void setAcc30(int acc30) {
+        this.acc30 = acc30;
+    }
+
+    public int getAcc60() {
+        return acc60;
+    }
+
+    public void setAcc60(int acc60) {
+        this.acc60 = acc60;
+    }
 
     public Score() {
         this.worstCh = new PriorityQueue<>();

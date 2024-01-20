@@ -97,11 +97,11 @@
             <Button layoutX="518.0" layoutY="75.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: transparent;  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="BACK" />
         </children>
     </Pane>
-      <Text fx:id="acc" fill="WHITE" layoutX="24.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="acc" wrappingWidth="87.0">
+      <Text fx:id="acc" fill="WHITE" layoutX="365.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="acc" wrappingWidth="161.0">
          <font>
             <Font size="33.0" />
          </font></Text>
-      <Text fx:id="wpm" fill="WHITE" layoutX="164.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="wpm" wrappingWidth="87.0">
+      <Text fx:id="wpm" fill="WHITE" layoutX="191.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="wpm" wrappingWidth="222.0">
          <font>
             <Font size="33.0" />
          </font></Text>

@@ -13,6 +13,7 @@ public class PlayerList implements Serializable {
 
     public Player createPlayer(String namePlayer){
         if(!isFound(namePlayer)){
+            System.out.println("not found player");
             this.listOfPlayers.add(new Player(namePlayer));
             return this.listOfPlayers.get(listOfPlayers.size()-1);
         }

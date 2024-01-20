@@ -1,11 +1,13 @@
 package com.example.speedtyping;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class Player {
+public class Player implements Serializable {
 
     private String name;
     private Score score;
+
 
 
     public Player(String name) {
@@ -21,15 +23,18 @@ public class Player {
         return name;
     }
 
-    public void setScore(int newScore, int second){
+    public void setScore(int newScore, int second,int newAcc){
         if(second == 15 && newScore > this.score.getMax15()){
             this.score.setMax15(newScore);
+            this.score.setAcc15(newAcc);
         }
         else if(second == 30 && newScore > this.score.getMax30()){
             this.score.setMax30(newScore);
+            this.score.setAcc30(newAcc);
         }
         else if (second == 60 && newScore > this.score.getMax60()){
             this.score.setMax60(newScore);
+            this.score.setAcc60(newAcc);
         }
     }
     public void setWorstCharacter(Map<Character,Integer>storage){
@@ -37,6 +42,6 @@ public class Player {
     }
     @Override
     public String toString(){
-        return score.toString();
+        return name;
     }
 }

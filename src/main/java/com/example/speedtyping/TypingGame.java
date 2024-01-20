@@ -65,13 +65,14 @@ public class TypingGame  {
 
     private String filePath = "user-data.txt";
 
-    private PlayerList playerList;
+    private PlayerList playerList = new PlayerList();
     @FXML
     private  Pane pane;
     @FXML
     private VBox board;
     @FXML
     private Text time;
+
     @FXML
     private Button spaceBtn;
     private Boolean isStart ;
@@ -104,37 +105,22 @@ public class TypingGame  {
 
     private void loadList() {
         File f = new File(filePath);
-        try{
 
-
-
-
-            FileInputStream fos = new FileInputStream(f);
-            ObjectInputStream ois = new ObjectInputStream(fos);
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(fis);
 
             playerList = (PlayerList) ois.readObject();
 
-            if(playerList == null)
-            {
-                playerList = new PlayerList();
-                System.out.println("i love catchap");
-            }
-            System.out.println((PlayerList)playerList);
-            FileWriter fileWriter = new FileWriter(filePath);
-
-            // Truncate the file by writing an empty string
-            fileWriter.write("");
-
-            // Close the file
-            fileWriter.close();
 
             ois.close();
-        }catch (Exception e){
+
+            // Clear the file by truncating its contents
+            //FileOutputStream fos = new FileOutputStream(f, false);
+            //fos.close();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        playerList.createPlayer(name);
-        System.out.println(playerList.listOfPlayers.toString());
-        Files.newBufferedWriter(filePath , StandardOpenOption.TRUNCATE_EXISTING);
     }
     private void startRun() {
         new  Thread(new Runnable() {
@@ -176,7 +162,7 @@ public class TypingGame  {
 
     public void startGame(KeyEvent e) {
         pane.requestFocus();
-        System.out.println(allWords + " "+correctWords);
+
         acc.setVisible(true);
         wpm.setVisible(true);
         modeTimeBtn.setVisible(false);
@@ -315,6 +301,8 @@ public class TypingGame  {
             }
             return;
         }
+        acc.setText("acc"+Math.round(((correctWords*1.0)/allWords)*100));
+        wpm.setText("fas  "+ Math.round((allWords) / ((whatTime - Double.parseDouble(time.getText()))/60.0)) );
 
 
     }
@@ -408,12 +396,16 @@ public class TypingGame  {
         EventHandler<? super KeyEvent> currentHandler = pane.getOnKeyPressed();
 
         File f = new File(filePath);
-        System.out.println(playerList);
-        try{
+
+        try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject((PlayerList)playerList);
+            user = playerList.createPlayer(name);
+            user.setScore((int) Math.round(allWords / (whatTime / 60.0)), whatTime, (int) Math.round((correctWords * 1.0) / allWords * 100));
 
+            System.out.println(user.getScore().getAcc15() + "          " + user.getScore().getMax15() + "     " + user.getScore().toString());
+
+            oos.writeObject(playerList);
 
             oos.close();
         }catch (Exception e){
@@ -438,7 +430,7 @@ public class TypingGame  {
     }
 
     public void releaseKey() {
-        System.out.println("i love mostafa");
+
         keyboard.returnColor();
     }
 
