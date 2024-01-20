@@ -15,45 +15,7 @@
          </font></Text>
    <VBox fx:id="board" layoutX="121.0" layoutY="200.0" prefHeight="200.0" prefWidth="100.0" />
     <Button fx:id="spaceBtn" layoutX="391.0" layoutY="587.0" mnemonicParsing="false" onKeyPressed="#isSpaceClick" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="CONTROL + ENTER - RESET" />
-    <Pane fx:id="pane1" layoutX="24.0" layoutY="190.0" prefHeight="200.0" prefWidth="566.0" visible="false">
-        <children>
-            <Button layoutX="24.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent;  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="Q" />
-            <Button layoutX="66.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="W" />
-            <Button layoutX="108.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="E" />
-            <Button layoutX="150.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px;-fx-text-fill: white;" text="R" />
-            <Button layoutX="191.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="T" />
-            <Button layoutX="232.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="Y" />
-            <Button layoutX="275.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="U" />
-            <Button layoutX="316.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="I" />
-            <Button layoutX="357.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="O" />
-            <Button layoutX="398.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="P" />
-            <Button layoutX="375.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="L" />
-            <Button layoutX="334.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="K" />
-            <Button layoutX="293.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="J" />
-            <Button layoutX="250.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="H" />
-            <Button layoutX="227.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="B" />
-            <Button layoutX="60.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="Z" />
-            <Button layoutX="209.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px;-fx-text-fill: white;" text="G" />
-            <Button layoutX="84.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px;-fx-text-fill: white;" text="S" />
-            <Button layoutX="168.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="F" />
-            <Button layoutX="126.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="D" />
-            <Button layoutX="42.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="A" />
-            <Button layoutX="268.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="N" />
-            <Button layoutX="186.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="V" />
-            <Button layoutX="144.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="C" />
-            <Button layoutX="102.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="X" />
-            <Button layoutX="311.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="M" />
-            <Button layoutX="140.0" layoutY="145.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="237.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="SPACE" />
-            <Button layoutX="352.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="," />
-            <Button layoutX="393.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="." />
-            <Button layoutX="481.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="]" />
-            <Button layoutX="440.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="[" />
-            <Button layoutX="416.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text=";" />
-            <Button layoutX="458.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="'" />
-            <Button layoutX="434.0" layoutY="100.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="/" />
-        </children>
-    </Pane>
-    <Pane fx:id="pane2" layoutX="200.0" layoutY="190.0" prefHeight="200.0" prefWidth="566.0" visible="false">
+    <Pane fx:id="pane2" layoutX="268.0" layoutY="400.0" prefHeight="200.0" prefWidth="462.0">
         <children>
             <Button layoutX="24.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent;  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="Q" />
             <Button layoutX="66.0" layoutY="15.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="W" />
@@ -84,7 +46,7 @@
             <Button layoutX="102.0" layoutY="143.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="237.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6; -fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="SPACE" />
         </children>
     </Pane>
-    <Pane fx:id="pane3" layoutX="207.0" layoutY="300.0" prefHeight="305.0" prefWidth="615.0">
+    <Pane fx:id="pane3" layoutX="207.0" layoutY="300.0" prefHeight="305.0" prefWidth="615.0" visible="false">
         <children>
             <Button layoutX="43.0" layoutY="116.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent;  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="Q" />
             <Button layoutX="85.0" layoutY="116.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="W" />
@@ -135,17 +97,23 @@
             <Button layoutX="518.0" layoutY="75.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: transparent;  -fx-border-color: #dbd8b6;-fx-border-radius: 10; -fx-border-width: 1px 1px 1px 1px; -fx-text-fill: white;" text="BACK" />
         </children>
     </Pane>
-      <Text fx:id="acc" layoutX="89.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="acc" />
-      <Text fx:id="wpm" layoutX="127.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="wpm" />
+      <Text fx:id="acc" fill="WHITE" layoutX="24.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="acc" wrappingWidth="87.0">
+         <font>
+            <Font size="33.0" />
+         </font></Text>
+      <Text fx:id="wpm" fill="WHITE" layoutX="164.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="wpm" wrappingWidth="87.0">
+         <font>
+            <Font size="33.0" />
+         </font></Text>
       <HBox fx:id="modeTimeBtn" layoutX="213.0" layoutY="37.0" prefHeight="29.0" prefWidth="531.0" spacing="2.0">
          <children>
-            <Button id="1" mnemonicParsing="false" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="88.0" text="orignal" />
-            <Button id="2" mnemonicParsing="false" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="107.0" text="1010" />
-            <Button id="3" mnemonicParsing="false" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="79.0" text="upper" />
-            <Button id="4" mnemonicParsing="false" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="66.0" text="sp" />
-            <Button mnemonicParsing="false" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" onMouseClicked="#changeTime" prefHeight="25.0" prefWidth="61.0" text="60" />
-            <Button mnemonicParsing="false" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" onMouseClicked="#changeTime" prefHeight="25.0" prefWidth="59.0" text="30" />
-            <Button mnemonicParsing="false" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" onMouseClicked="#changeTime" prefHeight="25.0" prefWidth="63.0" text="15" />
+            <Button id="1" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="88.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="orignal" />
+            <Button id="2" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="107.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="1010" />
+            <Button id="3" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="79.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="upper" />
+            <Button id="4" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="66.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="sp" />
+            <Button mnemonicParsing="false" onMouseClicked="#changeTime" prefHeight="25.0" prefWidth="61.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="60" />
+            <Button mnemonicParsing="false" onMouseClicked="#changeTime" prefHeight="25.0" prefWidth="59.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="30" />
+            <Button mnemonicParsing="false" onMouseClicked="#changeTime" prefHeight="25.0" prefWidth="63.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="15" />
          </children>
       </HBox>
 

@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -23,12 +24,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
 public class TypingGame  {
     public Button enter;
+    public TextField textArea;
     private Thread endTime;
     private boolean isCorrect = true;
     private int allWords , correctWords;
@@ -57,6 +59,8 @@ public class TypingGame  {
     private Map<Integer,Word>mapListWord;
     private Stack<Boolean>backCorrectWord;
 
+    private String filePath = "Users-data.txt";
+
     private PlayerList playerList;
     @FXML
     private  Pane pane;
@@ -68,8 +72,7 @@ public class TypingGame  {
     private Button spaceBtn;
     private Boolean isStart ;
     public static boolean isClose = false;
-    @FXML
-    private  Pane pane1;
+
     @FXML
     private  Pane pane2;
     @FXML
@@ -80,6 +83,24 @@ public class TypingGame  {
     }
 
     public void endGame(){
+        File f = new File(filePath);
+        try{
+            FileInputStream fos = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(fos);
+
+            playerList = (PlayerList) ois.readObject();
+            System.out.println(Pl);
+            if(playerList == null)
+            {
+                playerList = new PlayerList();
+                System.out.println("i love catchap");
+            }
+            System.out.println(playerList);
+            f.delete();
+            ois.close();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
         listWord = new ListWord(board);
         player = new CursorPlayer();
@@ -89,7 +110,8 @@ public class TypingGame  {
         startRun();
         worstChar = new HashMap<>();
         backCorrectWord = new Stack<>();
-        keyboard = new Keyboard(pane3,pane1,pane2);;
+        keyboard = new Keyboard(pane3,pane2);;
+        System.out.println(playerList + "is endgame");
 
     }
     private void startRun() {
@@ -112,6 +134,11 @@ public class TypingGame  {
 
     public void checkPlayerRegister(ActionEvent et) throws IOException
     {
+
+
+
+
+
         Stage stage = (Stage) enter.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("hello-view.fxml"));
         Scene scene ;
@@ -126,6 +153,7 @@ public class TypingGame  {
         game = fxmlLoader.getController();
         game.endGame();
         stage.show();
+
     }
 
 
@@ -286,8 +314,8 @@ public class TypingGame  {
     }
 
     private void resetAll() {
-        thread.interrupt();
-        // endTime.interrupt();
+        //thread.interrupt();
+        //endTime.interrupt();
         row = 0;
         col = -1;
         listWord.resetBoard();
@@ -365,6 +393,9 @@ public class TypingGame  {
     public  void resetAndSave(){
         EventHandler<? super KeyEvent> currentHandler = pane.getOnKeyPressed();
 
+
+
+
 // Check if there is a handler registered
 
         try{
@@ -373,6 +404,17 @@ public class TypingGame  {
                 pane.setOnKeyPressed(this::shrinkPointer);
                 resetAll();
                 startRun();
+                File f = new File(filePath);
+                try{
+                    FileOutputStream fos = new FileOutputStream(f);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(playerList);
+
+
+                    oos.close();
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             });
         }catch (Exception e){
             System.out.println(e);

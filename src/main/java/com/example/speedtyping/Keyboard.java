@@ -18,16 +18,17 @@ public class Keyboard implements Colorable , Initializable {
 
     public Pane pane3;
 
-    private Pane pane1;
+
 
 
     private Pane pane2;
 
 
     Map<String, String> hm = new HashMap<String, String>();
-    public Keyboard(Pane pane3, Pane pane1, Pane pane2) {
+    public Keyboard(Pane pane3,  Pane pane2) {
         this.pane3 = pane3;
-        this.pane1 = pane1;
+
+
         this.pane2 = pane2;
         hm.put("OPEN_BRACKET", "[");
         hm.put("CLOSE_BRACKET", "]");
@@ -83,22 +84,17 @@ public class Keyboard implements Colorable , Initializable {
     {
         if(num == 1)
         {
-            pane1.setVisible(false);
-            pane2.setVisible(false);
-            pane3.setVisible(true);
-        }
-        if(num == 2)
-        {
-            pane1.setVisible(false);
+
             pane2.setVisible(true);
             pane3.setVisible(false);
         }
-        if(num == 3)
+        else
         {
-            pane1.setVisible(false);
+
             pane2.setVisible(false);
             pane3.setVisible(true);
         }
+
     }
 
     public void changeColor(KeyEvent e,boolean isCorrect) {
@@ -107,10 +103,7 @@ public class Keyboard implements Colorable , Initializable {
         System.out.println(hm.size());
         Pane pane ;
 
-        if(pane1.isVisible())
-        {
-            pane = pane1;
-        } else if (pane2.isVisible()) {
+         if (pane2.isVisible()) {
             pane = pane2;
         }
         else {
@@ -154,10 +147,7 @@ public class Keyboard implements Colorable , Initializable {
     public void returnColor() {
         System.out.println("helloSpace");
         Pane pane ;
-        if(pane1.isVisible())
-        {
-            pane = pane1;
-        } else if (pane2.isVisible()) {
+        if (pane2.isVisible()) {
             pane = pane2;
         }
         else {

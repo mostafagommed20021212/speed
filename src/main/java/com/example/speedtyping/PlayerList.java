@@ -6,6 +6,7 @@ public class PlayerList {
     List<Player>listOfPlayers;
 
     public PlayerList(){
+
         this.listOfPlayers = new ArrayList<>();
     }
 
