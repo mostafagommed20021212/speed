@@ -1,11 +1,12 @@
 package com.example.speedtyping;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class PlayerList {
+public class PlayerList implements Serializable {
     List<Player>listOfPlayers;
 
-    public PlayerList(){
+    public PlayerList() {
 
         this.listOfPlayers = new ArrayList<>();
     }
@@ -13,7 +14,7 @@ public class PlayerList {
     public Player createPlayer(String namePlayer){
         if(!isFound(namePlayer)){
             this.listOfPlayers.add(new Player(namePlayer));
-            return null;
+            return this.listOfPlayers.get(listOfPlayers.size()-1);
         }
         return this.listOfPlayers.stream().filter(e->e.getName().equals(namePlayer)).findAny().get();
     }

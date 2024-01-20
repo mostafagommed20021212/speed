@@ -26,6 +26,8 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class TypingGame  {
@@ -46,12 +48,14 @@ public class TypingGame  {
 
     private int mode =1 ;
     private boolean isTakeTime ;
-
+    static String name;
     private Keyboard keyboard;
     private int whatTime;
     private Timer timer;
     private HighScore highScore;
     private Cursor player;
+    private Player user;
+
     private ListWord listWord;
     private int row = 0,col =-1;
     private int counter;
@@ -59,7 +63,7 @@ public class TypingGame  {
     private Map<Integer,Word>mapListWord;
     private Stack<Boolean>backCorrectWord;
 
-    private String filePath = "Users-data.txt";
+    private String filePath = "user-data.txt";
 
     private PlayerList playerList;
     @FXML
@@ -83,25 +87,8 @@ public class TypingGame  {
     }
 
     public void endGame(){
-        File f = new File(filePath);
-        try{
-            FileInputStream fos = new FileInputStream(f);
-            ObjectInputStream ois = new ObjectInputStream(fos);
 
-            playerList = (PlayerList) ois.readObject();
-            System.out.println(Pl);
-            if(playerList == null)
-            {
-                playerList = new PlayerList();
-                System.out.println("i love catchap");
-            }
-            System.out.println(playerList);
-            f.delete();
-            ois.close();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
+        loadList();
         listWord = new ListWord(board);
         player = new CursorPlayer();
         pane.getChildren().add(player);
@@ -111,8 +98,43 @@ public class TypingGame  {
         worstChar = new HashMap<>();
         backCorrectWord = new Stack<>();
         keyboard = new Keyboard(pane3,pane2);;
-        System.out.println(playerList + "is endgame");
 
+
+    }
+
+    private void loadList() {
+        File f = new File(filePath);
+        try{
+
+
+
+
+            FileInputStream fos = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(fos);
+
+            playerList = (PlayerList) ois.readObject();
+
+            if(playerList == null)
+            {
+                playerList = new PlayerList();
+                System.out.println("i love catchap");
+            }
+            System.out.println((PlayerList)playerList);
+            FileWriter fileWriter = new FileWriter(filePath);
+
+            // Truncate the file by writing an empty string
+            fileWriter.write("");
+
+            // Close the file
+            fileWriter.close();
+
+            ois.close();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        playerList.createPlayer(name);
+        System.out.println(playerList.listOfPlayers.toString());
+        Files.newBufferedWriter(filePath , StandardOpenOption.TRUNCATE_EXISTING);
     }
     private void startRun() {
         new  Thread(new Runnable() {
@@ -127,17 +149,13 @@ public class TypingGame  {
 
     }
 
-
-
-
-
-
     public void checkPlayerRegister(ActionEvent et) throws IOException
     {
 
 
 
 
+        name = textArea.getText();
 
         Stage stage = (Stage) enter.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("hello-view.fxml"));
@@ -155,10 +173,6 @@ public class TypingGame  {
         stage.show();
 
     }
-
-
-
-
 
     public void startGame(KeyEvent e) {
         pane.requestFocus();
@@ -393,9 +407,20 @@ public class TypingGame  {
     public  void resetAndSave(){
         EventHandler<? super KeyEvent> currentHandler = pane.getOnKeyPressed();
 
+        File f = new File(filePath);
+        System.out.println(playerList);
+        try{
+            FileOutputStream fos = new FileOutputStream(f);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject((PlayerList)playerList);
 
 
+            oos.close();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
+//endgame
 // Check if there is a handler registered
 
         try{
@@ -404,17 +429,7 @@ public class TypingGame  {
                 pane.setOnKeyPressed(this::shrinkPointer);
                 resetAll();
                 startRun();
-                File f = new File(filePath);
-                try{
-                    FileOutputStream fos = new FileOutputStream(f);
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(playerList);
 
-
-                    oos.close();
-                }catch (Exception e){
-                    System.out.println(e.getMessage());
-                }
             });
         }catch (Exception e){
             System.out.println(e);
