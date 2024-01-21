@@ -108,7 +108,7 @@
          </font></Text>
       <HBox fx:id="modeTimeBtn" layoutX="213.0" layoutY="37.0" prefHeight="29.0" prefWidth="531.0" spacing="2.0">
          <children>
-            <Button id="1" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="88.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="orignal" />
+            <Button id="1" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="88.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:#D5AD17" text="orignal" />
             <Button id="2" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="107.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="1010" />
             <Button id="3" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="79.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="upper" />
             <Button id="4" mnemonicParsing="false" onMouseClicked="#changeMode" prefHeight="25.0" prefWidth="66.0" style="-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" text="sp" />

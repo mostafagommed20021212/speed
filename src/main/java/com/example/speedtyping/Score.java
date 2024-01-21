@@ -73,10 +73,11 @@ public class Score implements Serializable {
 
     public void updateWorstCh(Map<Character,Integer>storage){
         sortedList = new ArrayList<>(storage.entrySet());
-        sortedList.sort(Map.Entry.comparingByValue());
+        sortedList.sort(Map.Entry.<Character, Integer>comparingByValue().reversed());
     }
     @Override
     public String toString(){
+
         StringBuilder str = new StringBuilder("[ ");
         int n = 5;
         for (Map.Entry<Character, Integer> entry : sortedList) {

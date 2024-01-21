@@ -97,7 +97,7 @@ public class TypingGame  {
         this.mapListWord = listWord.getMapOfWord();
         isStart = true;
         startRun();
-        worstChar = new HashMap<>();
+        worstChar = new LinkedHashMap<>();
         backCorrectWord = new Stack<>();
         keyboard = new Keyboard(pane3,pane2);;
 
@@ -303,7 +303,8 @@ public class TypingGame  {
             return;
         }
         acc.setText("acc"+Math.round(((correctWords*1.0)/allWords)*100));
-        wpm.setText("fas  "+ Math.round((allWords) / ((whatTime - Double.parseDouble(time.getText()))/60.0)) );
+        if(!time.getText().isEmpty())
+            wpm.setText("fas  "+ Math.round((allWords) / ((whatTime - Double.parseDouble(time.getText()))/60.0)) );
 
 
     }
@@ -394,7 +395,7 @@ public class TypingGame  {
 
     }
     public  void resetAndSave(){
-        EventHandler<? super KeyEvent> currentHandler = pane.getOnKeyPressed();
+        if(TypingGame.isClose)return;
 
         File f = new File(filePath);
 
@@ -405,16 +406,13 @@ public class TypingGame  {
             user.setScore((int) Math.round(allWords / (whatTime / 60.0)), whatTime, (int) Math.round((correctWords * 1.0) / allWords * 100));
             user.setWorstCharacter(worstChar);
             System.out.println(user.getScore().getAcc15() + "          " + user.getScore().getMax15() + "     " + user.getScore().toString());
-
+            System.out.println(playerList.listOfPlayers.toString());
             oos.writeObject(playerList);
-
             oos.close();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
-//endgame
-// Check if there is a handler registered
 
         try{
 
