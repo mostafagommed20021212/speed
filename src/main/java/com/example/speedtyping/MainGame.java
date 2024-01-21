@@ -16,7 +16,7 @@ public class MainGame extends Application {
 
             FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("main-page.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-            stage.setTitle("Hello!");
+            stage.setTitle("Typing Game by Ahmed & Mostafa");
             stage.setScene(scene);
             stage.show();
 

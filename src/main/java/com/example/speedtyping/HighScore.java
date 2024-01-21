@@ -1,33 +1,28 @@
 package com.example.speedtyping;
 
+import javafx.scene.control.Button;
+import javafx.scene.text.Text;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
 public  class  HighScore  {
 
-    public static String updateHighScore(int second)
+    public static void updateHighScore(int second, Button high, PlayerList playerList)
     {
-        int maxi;
-        String name = "Ahmed";
-        File f = new File(name);
-
-        try{
-            FileInputStream fos = new FileInputStream(f);
-            ObjectInputStream ois = new ObjectInputStream(fos);
-            PlayerList p = (PlayerList)ois.readObject();
-            if(p!=null)
+        if(!playerList.listOfPlayers.isEmpty()) {
+            if(playerList.getHighScore(second) == 0)
+                high.setVisible(false);
+            else
             {
-                return String.valueOf(p.getHighScore(second));
-
+                high.setText("highScore : " + playerList.getHighScore(second));
             }
-        }catch(Exception e)
-        {
-            System.out.println(e);
+
+        }else {
+            high.setVisible(false);
         }
 
-
-        return "Hello world!";
     }
 
 }

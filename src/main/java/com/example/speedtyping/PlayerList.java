@@ -3,8 +3,9 @@ package com.example.speedtyping;
 import java.io.Serializable;
 import java.util.*;
 
+
 public class PlayerList implements Serializable {
-    List<Player>listOfPlayers;
+    List<Player> listOfPlayers;
 
     public PlayerList() {
 
@@ -20,9 +21,6 @@ public class PlayerList implements Serializable {
         return this.listOfPlayers.stream().filter(e->e.getName().equals(namePlayer)).findAny().get();
     }
 
-    public void deletePlayer(String namePlayer){
-        this.listOfPlayers.removeIf(e -> e.getName().equals(namePlayer));
-    }
 
     private boolean isFound(String namePlayer){
         return this.listOfPlayers.stream().anyMatch(e->e.getName().equals(namePlayer));
@@ -39,12 +37,18 @@ public class PlayerList implements Serializable {
         return 0;
     }
     public Map<Integer,List<Player>> updateScore(){
-        Map<Integer,List<Player>>map = null;
+        Map<Integer,List<Player>>map = new LinkedHashMap<>();;
+
         this.listOfPlayers.sort(Comparator.comparingInt(e -> e.getScore().getMax15()));
+        Collections.reverse(listOfPlayers);
         map.put(15,listOfPlayers);
+
         this.listOfPlayers.sort(Comparator.comparingInt(e -> e.getScore().getMax30()));
+        Collections.reverse(listOfPlayers);
         map.put(30,listOfPlayers);
+
         this.listOfPlayers.sort(Comparator.comparingInt(e -> e.getScore().getMax60()));
+        Collections.reverse(listOfPlayers);
         map.put(60,listOfPlayers);
         return map;
     }

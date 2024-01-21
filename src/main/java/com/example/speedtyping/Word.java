@@ -16,6 +16,4 @@ public class Word extends Text {
 
 
 
-
-
 }

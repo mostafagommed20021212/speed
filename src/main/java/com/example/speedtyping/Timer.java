@@ -2,10 +2,14 @@ package com.example.speedtyping;
 
 import javafx.application.Platform;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Timer implements Runnable {
     private AtomicInteger time;
+
+
     public static boolean endTheGame = false;
     private Text stage;
 

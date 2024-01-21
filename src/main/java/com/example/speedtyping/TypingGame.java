@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.input.KeyCode;
@@ -30,9 +31,17 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-public class TypingGame  {
+public class TypingGame   {
     public Button enter;
+    Stage stage3 = null;
+    @FXML
+    public Label king;
+    private boolean takeVS;
+    private int speedAi;
+    private int rowOfAi = 0;
     public TextField textArea;
+    @FXML
+    public Button high;
     private Thread endTime;
     private boolean isCorrect = true;
     private int allWords , correctWords;
@@ -43,16 +52,18 @@ public class TypingGame  {
     private Text acc;
     @FXML
     private HBox modeTimeBtn;
+    private   VBox aiBoard;
     private int correctChar = 0 ,unCorrectChar = 0;
     private  List<Character> ch = List.of('=', '-', ';', '.', ',', '\'', '[', ']');
 
+    public static double boundOfAi = 0.0;
+    private CursorAi corsorAi = null;
     private int mode =1 ;
     private boolean isTakeTime ;
     static String name;
     private Keyboard keyboard;
     private int whatTime;
     private Timer timer;
-    private HighScore highScore;
     private Cursor player;
     private Player user;
 
@@ -82,6 +93,23 @@ public class TypingGame  {
     private  Pane pane2;
     @FXML
     private  Pane pane3;
+    Runnable r = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(2000);
+                acc.setVisible(false);
+                wpm.setVisible(false);
+                modeTimeBtn.setVisible(true);
+                king.setVisible(true);
+
+                acc.setText("");
+                wpm.setText("");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
 
     public TypingGame() {
 
@@ -89,7 +117,6 @@ public class TypingGame  {
 
 
     public void endGame(){
-
         loadList();
         listWord = new ListWord(board);
         player = new CursorPlayer();
@@ -102,7 +129,10 @@ public class TypingGame  {
         keyboard = new Keyboard(pane3,pane2);;
 
 
+
     }
+
+
 
     private void loadList() {
         File f = new File(filePath);
@@ -122,6 +152,7 @@ public class TypingGame  {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+      //  user = playerList.createPlayer(name);
     }
     private void startRun() {
         new  Thread(new Runnable() {
@@ -143,31 +174,52 @@ public class TypingGame  {
 
 
         name = textArea.getText();
+        name = name.trim();
+
+        if(name.isEmpty())return;
 
         Stage stage = (Stage) enter.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("hello-view.fxml"));
         Scene scene ;
         try {
-            scene = new Scene(fxmlLoader.load(), 1100, 800);
+            scene = new Scene(fxmlLoader.load(), 1000, 610);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         TypingGame game;
-        stage.setTitle("Hello!");
+        stage.setTitle("Typing Game by Ahmed & Mostafa");
         stage.setScene(scene);
+        stage.setResizable(false);
         game = fxmlLoader.getController();
         game.endGame();
+        scene.setOnKeyPressed(e->{
+           if( e.getCode().equals(KeyCode.ESCAPE)){
+               TypingGame.isClose = true;
+               Timer.endTheGame = true;
+               stage.close();
+           }
+        });
+        stage.centerOnScreen();
         stage.show();
+       // stage.centerOnScreen();
 
     }
 
     public void startGame(KeyEvent e) {
+        if(stage3 != null){
+            stage3.close();
+        }
         pane.requestFocus();
+        btnsVisble();
 
-        acc.setVisible(true);
-        wpm.setVisible(true);
-        modeTimeBtn.setVisible(false);
         if(isStart){
+            if(takeVS){
+
+                corsorAi = new CursorAi(board);
+                pane.getChildren().add(corsorAi);
+                corsorAi.setVisible(true);
+                takeVS = false;
+            }
             timer = new Timer(whatTime,time);
             thread = new Thread(timer);
             thread.start();
@@ -233,6 +285,7 @@ public class TypingGame  {
         }
 
         String click = e.getText();
+
         click = mode == 3 || mode == 2 ?  click.toUpperCase() : click.toLowerCase();
 
 
@@ -302,12 +355,25 @@ public class TypingGame  {
             }
             return;
         }
-        acc.setText("acc"+Math.round(((correctWords*1.0)/allWords)*100));
-        if(!time.getText().isEmpty())
-            wpm.setText("fas  "+ Math.round((allWords) / ((whatTime - Double.parseDouble(time.getText()))/60.0)) );
+        acc.setText("Acc : "+Math.round(((correctWords*1.0)/allWords)*100));
+        if(!time.getText().isEmpty()){
+            long num = Math.round((allWords) / ((whatTime - Double.parseDouble(time.getText()))/60.0));
+            if(num >= 500)
+                num = 50;
+            wpm.setText("Wpm : "+ num );
+        }
 
 
     }
+
+    private void btnsVisble() {
+        king.setVisible(false);
+        high.setVisible(false);
+        acc.setVisible(true);
+        wpm.setVisible(true);
+        modeTimeBtn.setVisible(false);
+    }
+
     private void shrinkWords(String ch,boolean f){
         if(ch.equals(" ") || f){
             if(!backCorrectWord.empty()){
@@ -318,10 +384,16 @@ public class TypingGame  {
     }
 
     private void resetAll() {
-        //thread.interrupt();
+        pane.setOnKeyPressed(this::shrinkPointer);
+      if(thread != null && thread.isAlive())
+           thread.interrupt();
         //endTime.interrupt();
         row = 0;
         col = -1;
+        if(takeVS ||( corsorAi != null && corsorAi.isVisible())){
+            takeVS = true;
+            corsorAi.resetAll();
+        }
         listWord.resetBoard();
         listWord.addWordsToBoard(mode);
         mapListWord = listWord.getMapOfWord();
@@ -329,33 +401,54 @@ public class TypingGame  {
         isStart = true;
         time.setText("");
         player.resetAll();
-        acc.setVisible(false);
-        wpm.setVisible(false);
-        modeTimeBtn.setVisible(true);
-        unCorrectChar = 0;
-        correctChar = 0;
-        acc.setText("");
-        wpm.setText("");
+
         Timer.endTheGame = false;
         isTakeTime = false;
         allWords = 0;
         correctWords = 0;
         isCorrect = true;
         backCorrectWord.clear();
+        unCorrectChar = 0;
+        correctChar = 0;
+        Thread wpmAccReset = new Thread(r);
+        wpmAccReset.start();
+        resetTime();
+
+
+
+
+
+
     }
 
     private void shrinkPointer(KeyEvent e){
 
     }
     public void isSpaceClick(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.SPACE))
+        if(isTakeTime && keyEvent.getCode().equals(KeyCode.SPACE))
             startGame(keyEvent);
+    }
+    void resetTime(){
+        isTakeTime = false;
+        for(Node it : pane.getChildren()){
+            if(it instanceof HBox hBox){
+                for(Node i : hBox.getChildren()){
+                    if(i instanceof Button click){
+                        if(click.getText().equals("30") || click.getText().equals("60")|| click.getText().equals("15")){
+                            ((Button)i).setStyle("-fx-border-color: transparent; -fx-font-size: 14px; -fx-text-fill: #646669; -fx-background-color:transparent" );
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void changeTime(MouseEvent mouseEvent) {
+        high.setVisible(true);
         isTakeTime = true;
         whatTime =Integer.parseInt( ((Button) mouseEvent.getSource()).getText());
         HBox btnHbox = (HBox) ((Button) mouseEvent.getSource()).getParent();
+        HighScore.updateHighScore(whatTime,high,playerList);
 
         for(Node it :btnHbox.getChildren() ){
             if(it instanceof Button click){
@@ -395,18 +488,20 @@ public class TypingGame  {
 
     }
     public  void resetAndSave(){
-        if(TypingGame.isClose)return;
+
 
         File f = new File(filePath);
 
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            user = playerList.createPlayer(name);
-            user.setScore((int) Math.round(allWords / (whatTime / 60.0)), whatTime, (int) Math.round((correctWords * 1.0) / allWords * 100));
-            user.setWorstCharacter(worstChar);
-            System.out.println(user.getScore().getAcc15() + "          " + user.getScore().getMax15() + "     " + user.getScore().toString());
-            System.out.println(playerList.listOfPlayers.toString());
+            int ACC =(int) Math.round((correctWords * 1.0) / allWords * 100);
+            if(!isClose && ACC >= 30){
+                user = playerList.createPlayer(name);
+                System.out.println(name);
+                user.setScore((int) Math.round(allWords / (whatTime / 60.0)), whatTime,ACC);
+                user.setWorstCharacter(worstChar);
+            }
             oos.writeObject(playerList);
             oos.close();
         }catch (Exception e){
@@ -417,7 +512,7 @@ public class TypingGame  {
         try{
 
             Platform.runLater(()->{
-                pane.setOnKeyPressed(this::shrinkPointer);
+
                 resetAll();
                 startRun();
 
@@ -429,12 +524,77 @@ public class TypingGame  {
     }
 
     public void releaseKey() {
-
         keyboard.returnColor();
     }
 
 
     public void changeToScore(MouseEvent mouseEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("Score-panel.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, 826, 400);
+             stage3 = new Stage();
+            stage3.setTitle("Typing Game by Ahmed & Mostafa");
+            stage3.setScene(scene);
+            stage3.show();
+            scene.setOnKeyPressed(e->{
+                if(e.getCode().equals(KeyCode.ESCAPE))stage3.close();
+            });
 
+            Pane pane1 = (Pane) root.lookup("#pane15");
+            Pane pane2 = (Pane) root.lookup("#pane30");
+            Pane pane3 = (Pane) root.lookup("#pane60");
+            for(Player p:playerList.updateScore().get(15))
+            {
+                if(p.getScore().getMax15() == 0)continue;
+                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax15()+" Acc: "+p.getScore().getAcc15() + " WorstChar: "+p.getScore().toString());
+                stats.setStyle("-fx-background-color: transparent; -fx-border-color: #D5AD17; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;-fx-padding: 0 10px;  -fx-margin-top: 105px;");
+                stats.setMinWidth(282);
+                stats.setMinHeight(40);
+
+                pane1.getChildren().addAll(stats);
+            }
+
+            for(Player p:playerList.updateScore().get(30))
+            {
+                if(p.getScore().getMax30() == 0)continue;
+                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax30()+" Acc: "+p.getScore().getAcc30() + " WorstChar: "+p.getScore().toString());
+                stats.setStyle("-fx-background-color: transparent; -fx-border-color: #D5AD17; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;-fx-padding: 0 10px;  -fx-margin-top: 105px;");
+                stats.setMinWidth(282);
+                stats.setMinHeight(40);
+                pane2.getChildren().addAll(stats);
+            }
+
+            for(Player p:playerList.updateScore().get(60))
+            {
+                if(p.getScore().getMax60() == 0)continue;
+                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax60()+" Acc: "+p.getScore().getAcc60() + " WorstChar: "+p.getScore().toString());
+                stats.setStyle("-fx-background-color: transparent; -fx-border-color: #D5AD17; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;-fx-padding: 0 10px;  -fx-margin-top: 105px;");
+                stats.setMinWidth(282);
+                stats.setMinHeight(40);
+                pane3.getChildren().addAll(stats);
+            }
+
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    public void AiChallenge(MouseEvent mouseEvent) {
+        if(takeVS || corsorAi != null){
+            ((Button)mouseEvent.getSource()).setStyle("-fx-background-color:transparent");
+            takeVS = false;
+            if(corsorAi != null)
+                corsorAi.setVisible(false);
+        }else{
+            takeVS = true;
+            ((Button)mouseEvent.getSource()).setStyle("-fx-background-color:#fba700");
+        }
+        spaceBtn.requestFocus();
     }
 }

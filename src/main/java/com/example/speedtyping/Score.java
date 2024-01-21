@@ -1,20 +1,17 @@
 package com.example.speedtyping;
 
-
-import javafx.util.Pair;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 
 public class Score implements Serializable {
 
-    private int max15,max30,max60;
-    private int acc15,acc30,acc60;
+    private static final long serialVersionUID = 1L;
 
-    List<Map.Entry<Character, Integer>> sortedList;
+    private int max15, max30, max60;
+    private int acc15, acc30, acc60;
+    private List<Entry<Character, Integer>> sortedList;
 
     public int getAcc15() {
         return acc15;
@@ -41,7 +38,6 @@ public class Score implements Serializable {
     }
 
     public Score() {
-
         this.max15 = 0;
         this.max30 = 0;
         this.max60 = 0;
@@ -71,21 +67,42 @@ public class Score implements Serializable {
         this.max60 = max60;
     }
 
-    public void updateWorstCh(Map<Character,Integer>storage){
-        sortedList = new ArrayList<>(storage.entrySet());
-        sortedList.sort(Map.Entry.<Character, Integer>comparingByValue().reversed());
+    public void updateWorstCh(Map<Character, Integer> storage) {
+        sortedList = new ArrayList<>();
+        for (Map.Entry<Character, Integer> entry : storage.entrySet()) {
+            sortedList.add(new Entry<>(entry.getKey(), entry.getValue()));
+        }
+        sortedList.sort((e1, e2) -> e2.getValue() - e1.getValue());
     }
-    @Override
-    public String toString(){
 
+    @Override
+    public String toString() {
         StringBuilder str = new StringBuilder("[ ");
         int n = 5;
-        for (Map.Entry<Character, Integer> entry : sortedList) {
+        for (Entry<Character, Integer> entry : sortedList) {
             str.append(entry.getKey()).append(" ");
-            if(--n == 0)break;
+            if (--n == 0) break;
         }
         str.append("]");
 
         return str.toString();
+    }
+
+    private static class Entry<K, V> implements Serializable {
+        private K key;
+        private V value;
+
+        public Entry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
     }
 }
