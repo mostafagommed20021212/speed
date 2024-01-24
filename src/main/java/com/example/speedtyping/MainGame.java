@@ -18,7 +18,6 @@ public class MainGame extends Application {
             stage.setTitle("Typing Game by Ahmed & Mostafa");
             stage.setScene(scene);
             stage.show();
-
             stage.setOnCloseRequest(e->{
                 TypingGame.isClose = true;
                 Timer.endTheGame = true;

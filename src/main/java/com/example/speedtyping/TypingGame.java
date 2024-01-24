@@ -10,9 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -32,7 +30,11 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class TypingGame    {
+
+    @FXML
     public Button enter;
+    @FXML
+    public Label logo;
     Stage stage3 = null;
     @FXML
     public Label king;
@@ -117,13 +119,9 @@ public class TypingGame    {
         pane.getChildren().add(player);
         this.mapListWord = listWord.getMapOfWord();
         isStart = true;
-        startRun();
         worstChar = new LinkedHashMap<>();
         backCorrectWord = new Stack<>();
         keyboard = new Keyboard(pane3,pane2);;
-
-
-
     }
 
 
@@ -153,7 +151,7 @@ public class TypingGame    {
             @Override
             public void run() {
                 while ( !isClose &&!Thread.currentThread().isInterrupted() && !Timer.endTheGame){
-
+                    System.out.println("start");
                 }
                 resetAndSave();
             }
@@ -195,7 +193,7 @@ public class TypingGame    {
         });
         stage.centerOnScreen();
         stage.show();
-       // stage.centerOnScreen();
+
 
     }
 
@@ -214,6 +212,7 @@ public class TypingGame    {
                 corsorAi.setVisible(true);
                 takeVS = false;
             }
+            startRun();
             timer = new Timer(whatTime,time);
             thread = new Thread(timer);
             thread.start();
@@ -391,6 +390,7 @@ public class TypingGame    {
             corsorAi.resetAll();
             pane.getChildren().remove(corsorAi);
         }
+
         listWord.resetBoard();
         listWord.addWordsToBoard(mode);
         mapListWord = listWord.getMapOfWord();
@@ -398,7 +398,7 @@ public class TypingGame    {
         isStart = true;
         time.setText("");
         player.resetAll();
-
+        isClose = false;
         Timer.endTheGame = false;
         isTakeTime = false;
         allWords = 0;
@@ -410,6 +410,7 @@ public class TypingGame    {
         Thread wpmAccReset = new Thread(r);
         wpmAccReset.start();
         resetTime();
+
     }
 
     private void shrinkPointer(KeyEvent e){
@@ -481,6 +482,7 @@ public class TypingGame    {
     public  void resetAndSave(){
 
 
+
         File f = new File(filePath);
 
         try {
@@ -489,7 +491,6 @@ public class TypingGame    {
             int ACC =(int) Math.round((correctWords * 1.0) / allWords * 100);
             if(!isClose && ACC >= 30){
                 user = playerList.createPlayer(name);
-                System.out.println(name);
                 user.setScore((int) Math.round(allWords / (whatTime / 60.0)), whatTime,ACC);
                 user.setWorstCharacter(worstChar,whatTime);
             }
@@ -502,12 +503,7 @@ public class TypingGame    {
 
         try{
 
-            Platform.runLater(()->{
-
-                resetAll();
-                startRun();
-
-            });
+            Platform.runLater(this::resetAll);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -528,6 +524,7 @@ public class TypingGame    {
             stage3.setTitle("Typing Game by Ahmed & Mostafa");
             stage3.setScene(scene);
             stage3.show();
+            stage3.setResizable(true);
             scene.setOnKeyPressed(e->{
                 if(e.getCode().equals(KeyCode.ESCAPE))stage3.close();
             });
@@ -592,5 +589,36 @@ public class TypingGame    {
             ((Button)mouseEvent.getSource()).setStyle("-fx-background-color:#fba700");
         }
         spaceBtn.requestFocus();
+    }
+
+    public void deleteFile(MouseEvent mouseEvent) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Delete File");
+        alert.setHeaderText("click on delete if you want to delete all data");
+        ButtonType okButton = new ButtonType("Delete");
+        ButtonType cancelButton = new ButtonType("Cancel");
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+        if (result == okButton)
+        {
+            File f = new File("user-data.txt");
+            f.delete();
+        }
+
+
+    }
+
+    public void firstPage(MouseEvent mouseEvent) throws IOException {
+        TypingGame.isClose = true;
+        Timer.endTheGame = true;
+        Stage s = (Stage) pane.getScene().getWindow();
+        s.close();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("main-page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Stage stage = new Stage();
+        stage.setTitle("Typing Game by Ahmed & Mostafa");
+        stage.setScene(scene);
+        stage.show();
+
     }
 }

@@ -138,7 +138,7 @@
             </Button>
          </children>
       </HBox>
-      <Label layoutX="31.0" layoutY="26.0" text="M-A" textFill="#d5ad17">
+      <Label fx:id="logo" layoutX="31.0" layoutY="26.0" onMouseClicked="#firstPage" text="M-A" textFill="#d5ad17">
          <font>
             <Font name="System Bold" size="50.0" />
          </font>

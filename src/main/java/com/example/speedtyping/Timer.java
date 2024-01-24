@@ -23,7 +23,7 @@ public class Timer implements Runnable {
         try {
             while (!endTheGame && !Thread.currentThread().isInterrupted() && this.time.get() >= 0) {
                 Platform.runLater(() -> stage.setText(String.valueOf(this.time.getAndDecrement())));
-
+                System.out.println("time");
                 Thread.sleep(1000);
             }
         } catch (InterruptedException e) {
