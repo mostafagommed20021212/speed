@@ -6,6 +6,7 @@ import java.util.*;
 
 public class PlayerList implements Serializable {
     List<Player> listOfPlayers;
+    Map<Integer,List<Player>>map = new LinkedHashMap<>();;
 
     public PlayerList() {
 
@@ -29,28 +30,39 @@ public class PlayerList implements Serializable {
     public int getHighScore(int second) {
         if(second == 15)
             return this.listOfPlayers.stream().max(Comparator.comparingInt(x -> x.getScore().getMax15())).get().getScore().getMax15();
-        if(second == 30)
+        else if(second == 30)
             return this.listOfPlayers.stream().max(Comparator.comparingInt(x -> x.getScore().getMax30())).get().getScore().getMax30();
-        if(second == 60)
+        else
             return this.listOfPlayers.stream().max(Comparator.comparingInt(x -> x.getScore().getMax60())).get().getScore().getMax60();
-
-        return 0;
     }
-    public Map<Integer,List<Player>> updateScore(){
-        Map<Integer,List<Player>>map = new LinkedHashMap<>();;
+    public void updateScore15(){
 
-        this.listOfPlayers.sort(Comparator.comparingInt(e -> e.getScore().getMax15()));
-        Collections.reverse(listOfPlayers);
-        map.put(15,listOfPlayers);
+        this.listOfPlayers.sort((x,y)-> {
 
-        this.listOfPlayers.sort(Comparator.comparingInt(e -> e.getScore().getMax30()));
-        Collections.reverse(listOfPlayers);
-        map.put(30,listOfPlayers);
+            if(y.getScore().getMax15() - x.getScore().getMax15() ==0){
+               return y.getScore().getAcc15() - x.getScore().getAcc15();
+            }
+            return y.getScore().getMax15() - x.getScore().getMax15();
+        });
 
-        this.listOfPlayers.sort(Comparator.comparingInt(e -> e.getScore().getMax60()));
-        Collections.reverse(listOfPlayers);
-        map.put(60,listOfPlayers);
-        return map;
     }
 
+    public void updateScore30(){
+        this.listOfPlayers.sort((x,y)-> {
+            if(y.getScore().getMax30() - x.getScore().getMax30() ==0){
+                return y.getScore().getAcc30() - x.getScore().getAcc30();
+            }
+            return y.getScore().getMax30() - x.getScore().getMax30();
+        });
+
+    }
+    public void updateScore60(){
+        this.listOfPlayers.sort((x,y)-> {
+            if(y.getScore().getMax60() - x.getScore().getMax60() ==0){
+                return y.getScore().getMax60() - x.getScore().getMax60();
+            }
+            return y.getScore().getMax60() - x.getScore().getMax60();
+        });
+
+    }
 }

@@ -11,7 +11,6 @@ public class MainGame extends Application {
     TypingGame game;
     @Override
     public void start(Stage stage) throws IOException {
-
         try{
 
             FXMLLoader fxmlLoader = new FXMLLoader(MainGame.class.getResource("main-page.fxml"));
@@ -27,7 +26,6 @@ public class MainGame extends Application {
         }catch (Exception e){
             System.out.println(e);
         }
-
     }
 
     public static void main(String[] args) {

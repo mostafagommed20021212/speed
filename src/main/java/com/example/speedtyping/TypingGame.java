@@ -31,18 +31,16 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-public class TypingGame   {
+public class TypingGame    {
     public Button enter;
     Stage stage3 = null;
     @FXML
     public Label king;
     private boolean takeVS;
-    private int speedAi;
-    private int rowOfAi = 0;
     public TextField textArea;
     @FXML
     public Button high;
-    private Thread endTime;
+
     private boolean isCorrect = true;
     private int allWords , correctWords;
     private Map<Character,Integer>worstChar;
@@ -52,11 +50,11 @@ public class TypingGame   {
     private Text acc;
     @FXML
     private HBox modeTimeBtn;
-    private   VBox aiBoard;
+
     private int correctChar = 0 ,unCorrectChar = 0;
     private  List<Character> ch = List.of('=', '-', ';', '.', ',', '\'', '[', ']');
 
-    public static double boundOfAi = 0.0;
+
     private CursorAi corsorAi = null;
     private int mode =1 ;
     private boolean isTakeTime ;
@@ -102,7 +100,6 @@ public class TypingGame   {
                 wpm.setVisible(false);
                 modeTimeBtn.setVisible(true);
                 king.setVisible(true);
-
                 acc.setText("");
                 wpm.setText("");
             } catch (InterruptedException e) {
@@ -111,12 +108,9 @@ public class TypingGame   {
         }
     };
 
-    public TypingGame() {
-
-    }
 
 
-    public void endGame(){
+    public void start(){
         loadList();
         listWord = new ListWord(board);
         player = new CursorPlayer();
@@ -146,7 +140,7 @@ public class TypingGame   {
 
             ois.close();
 
-            // Clear the file by truncating its contents
+
             //FileOutputStream fos = new FileOutputStream(f, false);
             //fos.close();
         } catch (Exception e) {
@@ -191,7 +185,7 @@ public class TypingGame   {
         stage.setScene(scene);
         stage.setResizable(false);
         game = fxmlLoader.getController();
-        game.endGame();
+        game.start();
         scene.setOnKeyPressed(e->{
            if( e.getCode().equals(KeyCode.ESCAPE)){
                TypingGame.isClose = true;
@@ -243,6 +237,7 @@ public class TypingGame   {
                 }
                 counter--;
                 col--;
+                resetAccAndWpm();
                 return;
             }
             while (counter != 0 && !wordDelete.getText().equals(" ")){
@@ -260,7 +255,7 @@ public class TypingGame   {
 
             wordDelete.setFill(Color.rgb(219, 216, 182));
 
-
+            resetAccAndWpm();
             if(col == -2 && row == 0){
                 wordDelete = mapListWord.get(counter+1);
                 player.moveLeft(wordDelete);
@@ -272,8 +267,6 @@ public class TypingGame   {
             }
             shrinkWords(wordDelete.getText(),false);
             return;
-
-
         }
 
         Word charClick = mapListWord.get(counter);
@@ -299,7 +292,6 @@ public class TypingGame   {
         if(isLetter || isSpace){
             if(isCorrect && charClick.getText().equals(" ")) {
                 correctWords++;
-
             }
             if(charClick.getText().equals(" "))
             {
@@ -353,8 +345,14 @@ public class TypingGame   {
                 player.moveLeft(charClick);
                 col--;
             }
-            return;
+
         }
+        resetAccAndWpm();
+
+
+    }
+
+    private void resetAccAndWpm() {
         acc.setText("Acc : "+Math.round(((correctWords*1.0)/allWords)*100));
         if(!time.getText().isEmpty()){
             long num = Math.round((allWords) / ((whatTime - Double.parseDouble(time.getText()))/60.0));
@@ -362,8 +360,6 @@ public class TypingGame   {
                 num = 50;
             wpm.setText("Wpm : "+ num );
         }
-
-
     }
 
     private void btnsVisble() {
@@ -393,6 +389,7 @@ public class TypingGame   {
         if(takeVS ||( corsorAi != null && corsorAi.isVisible())){
             takeVS = true;
             corsorAi.resetAll();
+            pane.getChildren().remove(corsorAi);
         }
         listWord.resetBoard();
         listWord.addWordsToBoard(mode);
@@ -413,12 +410,6 @@ public class TypingGame   {
         Thread wpmAccReset = new Thread(r);
         wpmAccReset.start();
         resetTime();
-
-
-
-
-
-
     }
 
     private void shrinkPointer(KeyEvent e){
@@ -500,7 +491,7 @@ public class TypingGame   {
                 user = playerList.createPlayer(name);
                 System.out.println(name);
                 user.setScore((int) Math.round(allWords / (whatTime / 60.0)), whatTime,ACC);
-                user.setWorstCharacter(worstChar);
+                user.setWorstCharacter(worstChar,whatTime);
             }
             oos.writeObject(playerList);
             oos.close();
@@ -533,7 +524,7 @@ public class TypingGame   {
         try {
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 826, 400);
-             stage3 = new Stage();
+            stage3 = new Stage();
             stage3.setTitle("Typing Game by Ahmed & Mostafa");
             stage3.setScene(scene);
             stage3.show();
@@ -544,31 +535,36 @@ public class TypingGame   {
             Pane pane1 = (Pane) root.lookup("#pane15");
             Pane pane2 = (Pane) root.lookup("#pane30");
             Pane pane3 = (Pane) root.lookup("#pane60");
-            for(Player p:playerList.updateScore().get(15))
+
+
+            playerList.updateScore15();
+            for(Player p: playerList.listOfPlayers)
             {
+                System.out.println(p.getName());
+                System.out.println(p.getScore().getMax15());
                 if(p.getScore().getMax15() == 0)continue;
-                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax15()+" Acc: "+p.getScore().getAcc15() + " WorstChar: "+p.getScore().toString());
+                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax15()+" Acc: "+p.getScore().getAcc15() + " WorstChar: "+p.getScore().toStringTime(15));
                 stats.setStyle("-fx-background-color: transparent; -fx-border-color: #D5AD17; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;-fx-padding: 0 10px;  -fx-margin-top: 105px;");
                 stats.setMinWidth(282);
                 stats.setMinHeight(40);
 
                 pane1.getChildren().addAll(stats);
             }
-
-            for(Player p:playerList.updateScore().get(30))
+            playerList.updateScore30();
+            for(Player p: playerList.listOfPlayers)
             {
                 if(p.getScore().getMax30() == 0)continue;
-                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax30()+" Acc: "+p.getScore().getAcc30() + " WorstChar: "+p.getScore().toString());
+                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax30()+" Acc: "+p.getScore().getAcc30() + " WorstChar: "+p.getScore().toStringTime(30));
                 stats.setStyle("-fx-background-color: transparent; -fx-border-color: #D5AD17; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;-fx-padding: 0 10px;  -fx-margin-top: 105px;");
                 stats.setMinWidth(282);
                 stats.setMinHeight(40);
                 pane2.getChildren().addAll(stats);
             }
-
-            for(Player p:playerList.updateScore().get(60))
+            playerList.updateScore60();
+            for(Player p: playerList.listOfPlayers)
             {
                 if(p.getScore().getMax60() == 0)continue;
-                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax60()+" Acc: "+p.getScore().getAcc60() + " WorstChar: "+p.getScore().toString());
+                Button stats = new Button(p.getName() + " Wpm: " + p.getScore().getMax60()+" Acc: "+p.getScore().getAcc60() + " WorstChar: "+p.getScore().toStringTime(60));
                 stats.setStyle("-fx-background-color: transparent; -fx-border-color: #D5AD17; -fx-border-width: 0px 0px 2px 0px; -fx-text-fill: white;-fx-padding: 0 10px;  -fx-margin-top: 105px;");
                 stats.setMinWidth(282);
                 stats.setMinHeight(40);

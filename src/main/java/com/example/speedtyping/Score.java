@@ -11,7 +11,7 @@ public class Score implements Serializable {
 
     private int max15, max30, max60;
     private int acc15, acc30, acc60;
-    private List<Entry<Character, Integer>> sortedList;
+    private List<Entry<Character, Integer>> sortedList15,sortedList30,sortedList60;
 
     public int getAcc15() {
         return acc15;
@@ -67,16 +67,37 @@ public class Score implements Serializable {
         this.max60 = max60;
     }
 
-    public void updateWorstCh(Map<Character, Integer> storage) {
-        sortedList = new ArrayList<>();
-        for (Map.Entry<Character, Integer> entry : storage.entrySet()) {
-            sortedList.add(new Entry<>(entry.getKey(), entry.getValue()));
+    public void updateWorstCh(Map<Character, Integer> storage,int time) {
+        if(time == 15 ){
+            sortedList15 = new ArrayList<>();
+            for (Map.Entry<Character, Integer> entry : storage.entrySet()) {
+                sortedList15.add(new Entry<>(entry.getKey(), entry.getValue()));
+            }
+            sortedList15.sort((e1, e2) -> e2.getValue() - e1.getValue());
+        } else if (time == 30) {
+            sortedList30 = new ArrayList<>();
+            for (Map.Entry<Character, Integer> entry : storage.entrySet()) {
+                sortedList30.add(new Entry<>(entry.getKey(), entry.getValue()));
+            }
+            sortedList30.sort((e1, e2) -> e2.getValue() - e1.getValue());
         }
-        sortedList.sort((e1, e2) -> e2.getValue() - e1.getValue());
+        else{
+            sortedList60 = new ArrayList<>();
+            for (Map.Entry<Character, Integer> entry : storage.entrySet()) {
+                sortedList60.add(new Entry<>(entry.getKey(), entry.getValue()));
+            }
+            sortedList60.sort((e1, e2) -> e2.getValue() - e1.getValue());
+        }
     }
 
-    @Override
-    public String toString() {
+
+    public String toStringTime(int time) {
+         List<Entry<Character, Integer>>sortedList;
+        if(time == 15){
+            sortedList = sortedList15;
+        } else if (time == 30) {
+            sortedList = sortedList30;
+        }else   sortedList = sortedList60;
         StringBuilder str = new StringBuilder("[ ");
         int n = 5;
         for (Entry<Character, Integer> entry : sortedList) {
@@ -87,8 +108,8 @@ public class Score implements Serializable {
 
         return str.toString();
     }
-
     private static class Entry<K, V> implements Serializable {
+
         private K key;
         private V value;
 

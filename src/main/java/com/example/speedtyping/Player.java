@@ -37,8 +37,8 @@ public class Player implements Serializable {
             this.score.setAcc60(newAcc);
         }
     }
-    public void setWorstCharacter(Map<Character,Integer>storage){
-        score.updateWorstCh(storage);
+    public void setWorstCharacter(Map<Character,Integer>storage,int time){
+        score.updateWorstCh(storage,time);
     }
     @Override
     public String toString(){
